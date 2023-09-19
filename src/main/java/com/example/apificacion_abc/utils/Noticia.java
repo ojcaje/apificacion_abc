@@ -1,5 +1,7 @@
 package com.example.apificacion_abc.utils;
 
+import java.util.Objects;
+
 /**
  * Para leer las noticias de la página del diario
  */
@@ -84,6 +86,19 @@ public class Noticia {
 		this.resumen = resumen;
 	}
 	
+	public String toHTML(){
+		String html;
+		html ="<p>" + fecha + "</p>";
+		html = html + "<p>" + enlace + "</p>";
+		html = html + "<p>" + enlace_foto + "</p>";
+		html = html + "<p>" + titulo + "</p>";
+		html = html + "<p>" + resumen + "</p>";
+		if (!Objects.isNull(contenido_foto)){
+			html = html + "<p>" + contenido_foto + "</p>";
+			html = html + "<p>" + content_type_foto + "</p>";
+		}
 
+		return html;
+	}
 	
 }
