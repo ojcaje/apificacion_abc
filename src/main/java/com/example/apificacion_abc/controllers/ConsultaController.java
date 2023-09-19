@@ -33,10 +33,11 @@ public class ConsultaController {
 	@Operation(summary = "Realizar las consultas", description = "Realiza la consulta a abc y devuelve los resultados")
 	@GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.TEXT_PLAIN_VALUE, MediaType.TEXT_HTML_VALUE})
 	public ArrayList<Noticia> consulta(
-		@Parameter(required = true, description = "Texto de búsqueda") @RequestParam String q) throws Exception, ApiException {
+		@Parameter(required = true, description = "Texto de búsqueda") @RequestParam String q,
+		@Parameter(required = false, description = "Atributo extra") @RequestParam(defaultValue = "false") String f) throws Exception, ApiException {
 
 			// intentar devolver el html de abc o mostrar el error que ocurra
-			ArrayList<Noticia> noticias = AbcService.arrayNoticias(q);
+			ArrayList<Noticia> noticias = AbcService.arrayNoticias(q, f);
 			if(noticias.size()>0){
 				return noticias;
 			}
@@ -46,20 +47,4 @@ public class ConsultaController {
 			
 	}
 
-	@Operation(summary = "Realizar las consultas", description = "Realiza la consulta a abc y devuelve los resultados")
-	@GetMapping("/pruebas")
-	public String pruebas(
-		@Parameter(required = true, description = "Texto de búsqueda") @RequestParam String q) {
-
-			// intentar devolver el html de abc o mostrar el error que ocurra
-			try {
-			
-				return AbcService.getFromABC(q);
-			
-			} catch (Exception e) {
-				e.printStackTrace();
-				return "Error";
-			}
-	}
-	
 }

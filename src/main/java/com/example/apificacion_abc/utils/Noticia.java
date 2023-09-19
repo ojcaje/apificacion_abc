@@ -10,6 +10,8 @@ public class Noticia {
 	private String enlace_foto;
 	private String titulo;
 	private String resumen;
+	private String contenido_foto;
+	private String content_type_foto;
 
 
 	/**
@@ -26,6 +28,28 @@ public class Noticia {
 		this.enlace_foto = enlace_foto;
 		this.titulo = titulo;
 		this.resumen = resumen;
+		this.contenido_foto = null;
+		this.content_type_foto = null;
+	}
+
+
+	public String getContenido_foto() {
+		return contenido_foto;
+	}
+
+
+	public void setContenido_foto(String contenido_foto) {
+		this.contenido_foto = contenido_foto;
+	}
+
+
+	public String getContent_type_foto() {
+		return content_type_foto;
+	}
+
+
+	public void setContent_type_foto(String content_type_foto) {
+		this.content_type_foto = content_type_foto;
 	}
 
 

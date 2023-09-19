@@ -1,13 +1,17 @@
 package com.example.apificacion_abc.services;
 
 import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
+import java.net.URLConnection;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Map;
 import java.util.Objects;
 
@@ -51,7 +55,7 @@ public class AbcService {
 	 * @return el JSON con las noticias
 	 * @throws Exception
 	 */
-	public static ArrayList<Noticia> arrayNoticias(String busqueda) throws Exception{
+	public static ArrayList<Noticia> arrayNoticias(String busqueda, String f) throws Exception{
 		
 		String resultadosBusqueda = getFromABC(busqueda);
 		ArrayList<Noticia> noticias = new ArrayList<Noticia>();
@@ -78,15 +82,59 @@ public class AbcService {
 			);
 			String resumen = StringUtils.substringBetween(noticia, "<div class=\"PagePromo-description\">", "</div>").strip();
 			
-			// guardar en el ArrayList
-			noticias.add(new Noticia(
+			// guardar los datos en el nuevo objeto Noticia
+			Noticia nuevaNoticia = new Noticia(
 				fecha,
 				enlace,
 				enlace_foto,
 				titulo,
 				resumen
-			)
 			);
+
+			// añadir la imagen de así requerirlo con el parámetro f
+			if (f.equals("true")){
+
+				/**
+				 * ======== Fragmento de código pegado para convertir de imagen a Base64 ========
+				 */
+				// Create a URL object from the image URL
+				URL url = new URL(enlace_foto);
+				
+				// Open a connection to the URL
+				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+				
+				// Set the request method to GET
+				connection.setRequestMethod("GET");
+				
+				// Get the input stream from the connection
+				InputStream inputStream = connection.getInputStream();
+				
+				// Read the image data into a byte array
+				ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+				byte[] buffer = new byte[1024];
+				int bytesRead;
+				while ((bytesRead = inputStream.read(buffer)) != -1) {
+					byteArrayOutputStream.write(buffer, 0, bytesRead);
+				}
+
+				// Close the input stream and connection
+				inputStream.close();
+				connection.disconnect();
+				
+				// Encode the image data to Base64
+				byte[] imageBytes = byteArrayOutputStream.toByteArray();
+				String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+				/**
+				 * ======== fin del fragmento ========
+				 */
+
+				// guardar los datos
+				nuevaNoticia.setContenido_foto(base64Image);
+				nuevaNoticia.setContent_type_foto("image/" + enlace_foto.substring(enlace_foto.lastIndexOf(".")+1, enlace_foto.length()));
+			}
+
+			// guardar en el ArrayList
+			noticias.add(nuevaNoticia);
 		}
 
 		return noticias;
