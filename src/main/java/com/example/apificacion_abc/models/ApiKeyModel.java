@@ -2,8 +2,6 @@ package com.example.apificacion_abc.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -12,14 +10,14 @@ import jakarta.persistence.Table;
 public class ApiKeyModel {
 	@Id
 	@Column(unique = true, nullable = false)
-	private String key;
+	private String clave;
 
 	public String getId() {
-		return key;
+		return clave;
 	}
 
-	public void setId(String key) {
-		this.key = key;
+	public void setId(String clave) {
+		this.clave = clave;
 	}
 
 }

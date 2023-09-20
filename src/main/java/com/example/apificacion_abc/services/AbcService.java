@@ -2,9 +2,7 @@ package com.example.apificacion_abc.services;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URL;
-import java.net.URLConnection;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

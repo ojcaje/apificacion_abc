@@ -5,13 +5,9 @@ import java.util.Optional;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
-import com.example.apificacion_abc.controllers.ConsultaController;
-import com.example.apificacion_abc.errors.api_error_response.ApiError;
-import com.example.apificacion_abc.errors.api_error_response.ApiException;
 import com.example.apificacion_abc.models.ApiKeyModel;
 import com.example.apificacion_abc.repositories.ApiKeyRepository;
 
@@ -25,8 +21,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class ApiKeyRequestFilter extends GenericFilterBean {
-
-    private static final Logger LOG = (Logger) LoggerFactory.getLogger(ApiKeyRequestFilter.class);
 
 	@Autowired
     private ApiKeyRepository apiKeyRepository;
@@ -42,7 +36,6 @@ public class ApiKeyRequestFilter extends GenericFilterBean {
         }
 
         String key = req.getHeader("Key") == null ? "" : req.getHeader("Key");
-        LOG.info("Trying key: " + key);
 
         Optional<ApiKeyModel> apiKeyOptional = this.apiKeyRepository.findById(key);
         if(apiKeyOptional.isPresent()){
