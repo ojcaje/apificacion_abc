@@ -3,7 +3,6 @@ package com.example.apificacion_abc.security;
 import java.io.IOException;
 import java.util.Optional;
 
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
@@ -11,7 +10,6 @@ import org.springframework.web.filter.GenericFilterBean;
 import com.example.apificacion_abc.models.ApiKeyModel;
 import com.example.apificacion_abc.repositories.ApiKeyRepository;
 
-import ch.qos.logback.classic.Logger;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
